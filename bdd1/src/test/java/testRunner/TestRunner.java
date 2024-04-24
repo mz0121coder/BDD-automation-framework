@@ -13,8 +13,8 @@ import org.junit.runner.RunWith;
 //        Doesn't run tests, checks if any scenarios don't have a step definition
 //        Useful for frameworks containing a large number of scenarios
 //        dryRun=true
-//        Only run scenarios with specified tags
-//        tags={"@P1"}
+//        Only run scenario with specified tag
+//        tags = "@A2"
 //        Only run scenarios containing name
 //        name = {"Logo"}
 )
