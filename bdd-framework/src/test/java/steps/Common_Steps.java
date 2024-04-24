@@ -13,6 +13,7 @@ public class Common_Steps {
     public void setUp() {
         System.setProperty("webdriver.chrome.driver", "webdrivers/chromedriver");
         driver = new ChromeDriver();
+        driver.manage().window().maximize();
     }
 
     //import from cucumber.java, not junit

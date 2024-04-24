@@ -33,19 +33,19 @@ public class EbayHome_Steps {
         if (!expectedUrl.equals(actualUrl)) fail("Page does not navigate to expected page");
     }
 
-    @When("I search for iphone {int}")
-    public void iSearchForIphone(int arg0) {
+    @When("I search for {string}")
+    public void iSearchForIphone(String str) {
         WebElement searchInput = driver.findElement(By.id("gh-ac"));
-        searchInput.sendKeys("iphone 12");
+        searchInput.sendKeys(str);
         WebElement searchBtn = driver.findElement(By.id("gh-btn"));
         searchBtn.click();
     }
 
     @Then("I validate at least {int} search results are present")
-    public void iValidateAtLeastSearchResultsArePresent(int arg0) {
+    public void iValidateAtLeastSearchResultsArePresent(int count) {
         WebElement resultSpan = driver.findElement(By.cssSelector("#mainContent > div.s-answer-region.s-answer-region-center-top > div.srp-controls.srp-controls-v3.srp-controls--with-list.srp-controls--with-checkbox.srp-controls--resize > div.clearfix.srp-controls__row-2 > div:nth-child(1) > div.srp-controls__control.srp-controls__count > h1 > span:nth-child(1)"));
         int resultCount = Integer.parseInt(resultSpan.getText().replaceAll("\\D+", ""));
         System.out.println(resultCount);
-        if (resultCount < 1000) fail("Not enough results for iphone 12");
+        if (resultCount < count) fail("Not enough search results");
     }
 }
