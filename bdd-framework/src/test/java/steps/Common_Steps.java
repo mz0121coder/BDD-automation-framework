@@ -9,16 +9,18 @@ public class Common_Steps {
     private WebDriver driver;
 
     //import from cucumber.java, not junit
-    @Before
+    @Before(order = 1)
     public void setUp() {
         System.setProperty("webdriver.chrome.driver", "webdrivers/chromedriver");
         driver = new ChromeDriver();
         driver.manage().window().maximize();
+        System.out.println("Global Before Hook executed");
     }
 
     //import from cucumber.java, not junit
-    @After
+    @After(order = 0)
     public void tearDown() {
+        System.out.println("Global after hook executed");
         driver.quit();
         try {
             Thread.sleep(1000);

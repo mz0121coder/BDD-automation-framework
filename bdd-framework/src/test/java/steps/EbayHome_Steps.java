@@ -64,4 +64,5 @@ public class EbayHome_Steps {
         if (!actUrl.equals(url)) fail("Page does not navivate to expected url: " + url);
         if (!actTitle.contains(title)) fail("Page title does not contain expected title: " + title);
     }
+
 }

@@ -6,13 +6,13 @@ Feature: Ebay Home Page Scenarios
     When I click on the Advanced link
     Then I navigate to the Advanced Search page
 
-  @A2
+  @A2 @setCookies
   Scenario: Search for iphone 12
     Given I am on the Ebay Home Page
     When I search for 'iphone 12'
     Then I validate at least 5000 search results are present
 
-  @A3
+  @A3 @setCookies @Test
   Scenario: Search for samsung galaxy
     Given I am on the Ebay Home Page
     When I search for 'samsung galaxy'
