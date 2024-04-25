@@ -17,3 +17,12 @@ Feature: Ebay Advanced Search Page
     Given I am on Ebay Advanced Search Page
     When I search for 'art' in the 'Music' category
     Then I confirm at least 20 search results are present
+
+  @B4
+  Scenario: Advanced search for iphone in price range
+    Given I am on the Ebay Advanced Search Page
+    When I advanced search for an item
+      | keyword   | exclude     | min | max |
+      | iphone 12 | refurbished | 300 | 900 |
+    Then There are at least 5000 results
+
