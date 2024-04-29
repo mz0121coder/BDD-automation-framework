@@ -3,31 +3,52 @@ package actions;
 import elements.EbayHome_Elements;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import steps.Common_Steps;
 
+import java.util.List;
+
 public class EbayHome_Actions {
+
     private WebDriver driver;
-    EbayHome_Elements ebay_home_elements;
+    EbayHome_Elements ebayhome_elements;
 
     public EbayHome_Actions(Common_Steps common_steps) {
         this.driver = common_steps.getDriver();
-        ebay_home_elements = new EbayHome_Elements(driver);
+        ebayhome_elements = new EbayHome_Elements(driver);
     }
 
     public void clickAdvancedLink() {
-        ebay_home_elements.advancedSearchLink.click();
+        ebayhome_elements.advancedLink.click();
     }
 
-    public void searchForItem(String searchStr) {
-        ebay_home_elements.searchInput.sendKeys(searchStr);
-        ebay_home_elements.searchBtn.click();
+    public void searchAnItem(String srchString) {
+        ebayhome_elements.searchBox.sendKeys(srchString);
     }
 
-    public int countSearchResults() {
-        return Integer.parseInt(ebay_home_elements.resultSpan.getText().replaceAll("\\D+", ""));
+    public void clickSearchButton() {
+        ebayhome_elements.searchButton.click();
     }
 
-    public void navigateToSection(String sectionName) {
-        driver.findElement(By.linkText(sectionName)).click();
+    public int getSeatchItemsCount() {
+        String itemCount = ebayhome_elements.numOfItems.getText().trim();
+        String itemCount2 = itemCount.replace(",", "");
+        int itemCountInt = Integer.parseInt(itemCount2);
+        return itemCountInt;
     }
+
+    public void selectCategoryOption(String option) {
+        List<WebElement> cat = ebayhome_elements.catOptions;
+        for (WebElement x : cat) {
+            if (x.getText().trim().toLowerCase().equals(option.toLowerCase())) {
+                x.click();
+                break;
+            }
+        }
+    }
+
+    public void clickOnLinkByText(String Text) {
+        driver.findElement(By.linkText(Text)).click();
+    }
+
 }

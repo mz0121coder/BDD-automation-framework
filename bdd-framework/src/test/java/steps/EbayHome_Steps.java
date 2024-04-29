@@ -1,68 +1,79 @@
 package steps;
 
+import actions.Common_Actions;
+import actions.EbayHome_Actions;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 
 import static org.junit.Assert.fail;
 
 public class EbayHome_Steps {
-    WebDriver driver;
+    Common_Actions common_actions;
+    EbayHome_Actions ebayhome_actions;
 
-    public EbayHome_Steps(Common_Steps common_steps) {
-        this.driver = common_steps.getDriver();
+    public EbayHome_Steps(Common_Actions common_actions, EbayHome_Actions ebayhome_actions) {
+        this.common_actions = common_actions;
+        this.ebayhome_actions = ebayhome_actions;
     }
 
-    @Given("I am on the Ebay Home Page")
-    public void iAmOnTheEbayHomePage() {
-        driver.get("https://www.ebay.com/");
+    @Given("I am on Ebay Home Page")
+    public void i_am_on_Ebay_Home_Page() {
+        common_actions.goToUrl("https://www.ebay.com/");
     }
 
-    @When("I click on the Advanced link")
-    public void iClickOnTheAdvancedLink() {
-        driver.findElement(By.linkText("Advanced")).click();
+    @When("I click on Advanced Link")
+    public void i_click_on_Advanced_Link() {
+        ebayhome_actions.clickAdvancedLink();
     }
 
-    @Then("I navigate to the Advanced Search page")
-    public void iNavigateToTheAdvancedSearchPage() throws InterruptedException {
-        String expectedUrl = "https://www.ebay.com/sch/ebayadvsearch";
-        String actualUrl = driver.getCurrentUrl();
-        if (!expectedUrl.equals(actualUrl)) fail("Page does not navigate to expected page");
-        Thread.sleep(1000);
+    @Then("I navigate to Advanced Search page")
+    public void i_navigate_to_Advanced_Search_page() {
+        String expUrl = "https://www.ebay.com/sch/ebayadvsearch";
+        String actUrl = common_actions.getCurrentPageUrl();
+        if (!expUrl.equals(actUrl)) {
+            fail("Page does not navigae to expected page");
+        }
     }
 
     @When("I search for {string}")
-    public void iSearchForIphone(String str) {
-        WebElement searchInput = driver.findElement(By.id("gh-ac"));
-        searchInput.sendKeys(str);
-        WebElement searchBtn = driver.findElement(By.id("gh-btn"));
-        searchBtn.click();
+    public void i_search_for_iPhone_11(String str1) throws Exception {
+        ebayhome_actions.searchAnItem(str1);
+        ebayhome_actions.clickSearchButton();
+        Thread.sleep(1000);
     }
 
-    @Then("I validate at least {int} search results are present")
-    public void iValidateAtLeastSearchResultsArePresent(int count) throws InterruptedException {
-        WebElement resultSpan = driver.findElement(By.cssSelector("#mainContent > div.s-answer-region.s-answer-region-center-top > div.srp-controls.srp-controls-v3.srp-controls--with-list.srp-controls--with-checkbox.srp-controls--resize > div.clearfix.srp-controls__row-2 > div:nth-child(1) > div.srp-controls__control.srp-controls__count > h1 > span:nth-child(1)"));
-        int resultCount = Integer.parseInt(resultSpan.getText().replaceAll("\\D+", ""));
-        System.out.println(resultCount);
-        if (resultCount < count) fail("Not enough search results");
+    @Then("I validate at least {int} search items present")
+    public void i_validate_at_least_search_items_presentint(int count) {
+        int itemCountInt = ebayhome_actions.getSeatchItemsCount();
+        if (itemCountInt <= count) {
+            fail("Less than 1000 results shown");
+        }
+    }
+
+    @When("I search for {string} in {string} category")
+    public void i_search_for_in_category(String string, String string2) throws Exception {
+        ebayhome_actions.searchAnItem(string);
+        ebayhome_actions.selectCategoryOption(string2);
+        ebayhome_actions.clickSearchButton();
         Thread.sleep(1000);
     }
 
     @When("I click on {string}")
-    public void i_click_on(String string) throws InterruptedException {
-        driver.findElement(By.linkText(string)).click();
+    public void i_click_on(String string) throws Exception {
+        ebayhome_actions.clickOnLinkByText(string);
         Thread.sleep(1000);
     }
 
-    @Then("I navigate to {string} and page title contains {string}")
-    public void i_navigate_to_and_page_title_contains(String url, String title) {
-        String actUrl = driver.getCurrentUrl();
-        String actTitle = driver.getTitle();
-        if (!actUrl.equals(url)) fail("Page does not navivate to expected url: " + url);
-        if (!actTitle.contains(title)) fail("Page title does not contain expected title: " + title);
+    @Then("I validate that page navigates to {string} and title contains {string}")
+    public void i_validate_that_page_navigates_to_and_title_contains(String url, String title) {
+        String actUrl = common_actions.getCurrentPageUrl();
+        String actTitle = common_actions.getCurrentPageTitle();
+        if (!actUrl.equals(url)) {
+            fail("Page does navigate to expected url: " + url);
+        }
+        if (!actTitle.contains(title)) {
+            fail("Title mismatch");
+        }
     }
-
 }

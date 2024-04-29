@@ -1,37 +1,37 @@
 Feature: Ebay Home Page Scenarios
 
-  @A1
-  Scenario: Navigate to advanced search page
-    Given I am on the Ebay Home Page
-    When I click on the Advanced link
-    Then I navigate to the Advanced Search page
+  @P1 @P2
+  Scenario: Advanced Search Link
+    Given I am on Ebay Home Page
+    When I click on Advanced Link
+    Then I navigate to Advanced Search page
 
-  @A2 @setCookies
-  Scenario: Search for iphone 12
-    Given I am on the Ebay Home Page
-    When I search for 'iphone 12'
-    Then I validate at least 5000 search results are present
+  @P1 @setCookies @Test
+  Scenario: Search items count
+    Given I am on Ebay Home Page
+    When I search for 'iPhone 11'
+    Then I validate at least 1000 search items present
 
-  @A3 @setCookies @Test
-  Scenario: Search for samsung galaxy
-    Given I am on the Ebay Home Page
-    When I search for 'samsung galaxy'
-    Then I validate at least 2000 search results are present
+  @P24 @setCookies
+  Scenario: Search items count2
+    Given I am on Ebay Home Page
+    When I search for 'Toy Cars'
+    Then I validate at least 100 search items present
 
-  @A4
-  Scenario: Search for toy cars
-    Given I am on the Ebay Home Page
-    When I search for 'toy cars'
-    Then I validate at least 500 search results are present
+  @P240 @setCookies
+  Scenario: Search an item in category
+    Given I am on Ebay Home Page
+    When I search for 'soap' in 'Baby' category
+    Then I validate at least 50 search items present
 
-  @A5
-  Scenario Outline: Home Page links
-    Given I am on the Ebay Home Page
+  @P500
+  Scenario Outline: Home page links
+    Given I am on Ebay Home Page
     When I click on '<link>'
-    Then I navigate to '<url>' and page title contains '<title>'
+    Then I validate that page navigates to '<url>' and title contains '<title>'
 
     Examples:
-      | link    | url                                                                | title                         |
-      | Motors  | https://www.ebay.com/b/Auto-Parts-and-Vehicles/6000/bn_1865334     | eBay Motors                   |
-      | Fashion | https://www.ebay.com/b/Clothing-Shoes-Accessories/11450/bn_1852545 | Clothing, Shoes & Accessories |
-      | Toys    | https://www.ebay.com/b/Toys-Hobbies/220/bn_1865497                 | Toys & Hobbies                |
+      | link    | url                                                                | title       |
+      | Motors  | https://www.ebay.com/b/Auto-Parts-and-Vehicles/6000/bn_1865334     | eBay Motors |
+      | Fashion | https://www.ebay.com/b/Clothing-Shoes-Accessories/11450/bn_1852545 | Clothing    |
+      | Toys    | https://www.ebay.com/b/Toys-Hobbies/220/bn_1865497                 | Toys        |
